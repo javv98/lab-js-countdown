@@ -25,22 +25,23 @@ function startCountdown() {
 
   // Your code goes here ...
   btnStr.setAttribute("disabled", true)
+  timeEl.textContent = remainingTime
+
+  showToast("⏰ Final countdown! ⏰")
+
   timer = setInterval(() => {
-    timeEl.textContent = remainingTime
-    if (remainingTime === 10) {
-      toastMessage.textContent = "⏰ Final countdown! ⏰"
-      showToast()
-    } else if (remainingTime === 5) {
-      toastMessage.textContent = "Start the engines! 💥"
-      showToast()
-    } else if (remainingTime === 0) {
-      clearInterval(timer)
-      btnStr.removeAttribute("disabled")
-      remainingTime = DURATION + 1
-      toastMessage.textContent = "Lift off! 🚀"
-      showToast()
-    }
     remainingTime--
+    timeEl.textContent = remainingTime
+    if (remainingTime === 5) {
+      showToast("Start the engines! 💥")
+    }
+
+    if (remainingTime === 0) {
+      showToast("Lift off! 🚀")
+      clearInterval(timer)
+      remainingTime = DURATION
+      btnStr.removeAttribute("disabled")
+    }
   }, 1000)
 
 }
@@ -50,6 +51,8 @@ function startCountdown() {
 // ITERATION 3: Show Toast
 function showToast(message) {
   console.log("showToast called!");
+  
+  toastMessage.textContent = message
   divToast.classList.add("show")
   setTimeout(() => {
     divToast.classList.remove("show")
